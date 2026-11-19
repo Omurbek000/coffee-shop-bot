@@ -14,4 +14,5 @@ ADMIN_CHAT_ID = int(_admin_chat_id) if _admin_chat_id else None
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 
 MENU_FILE = BASE_DIR / "data" / "menu.json"
+DB_FILE = BASE_DIR / "data" / "coffee_shop.db"
 CART_FILE = BASE_DIR / "cart_data.json"

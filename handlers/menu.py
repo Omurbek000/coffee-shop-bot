@@ -1,38 +1,21 @@
-import json
 import logging
 
 from telebot import types
 
 import config
-from services import cart_service
+from services import cart_service, menu_service
 
 logger = logging.getLogger(__name__)
-
-
-def load_menu():
-    with open(config.MENU_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-
-MENU = load_menu()
-
-
-def find_product(product_id):
-    for category_key, category in MENU.items():
-        for product in category["items"]:
-            if product["id"] == product_id:
-                return category_key, product
-    return None, None
 
 
 def register(bot):
     def send_menu_categories(chat_id):
         markup = types.InlineKeyboardMarkup(row_width=1)
-        for key, category in MENU.items():
+        for category in menu_service.get_categories():
             markup.add(
                 types.InlineKeyboardButton(
                     f"{category['emoji']} {category['title']}",
-                    callback_data=f"category_{key}",
+                    callback_data=f"category_{category['slug']}",
                 )
             )
         bot.send_message(
@@ -77,19 +60,20 @@ def register(bot):
 
     @bot.callback_query_handler(func=lambda call: call.data.startswith("category_"))
     def show_category_products(call):
-        category_key = call.data.split("_", 1)[1]
-        category = MENU.get(category_key)
+        category_slug = call.data.split("_", 1)[1]
+        category = menu_service.get_category(category_slug)
+        products = menu_service.get_products(category_slug)
 
-        if not category:
-            bot.answer_callback_query(call.id, "Категория не найдена")
+        if not category or not products:
+            bot.answer_callback_query(call.id, "Категория пуста")
             return
 
         markup = types.InlineKeyboardMarkup(row_width=2)
-        for product in category["items"]:
+        for product in products:
             markup.add(
                 types.InlineKeyboardButton(
                     f"{product['emoji']} {product['name']} - {product['price']}₸",
-                    callback_data=f"product_{product['id']}",
+                    callback_data=f"product_{product['slug']}",
                 )
             )
         markup.add(types.InlineKeyboardButton("🔙 Назад", callback_data="menu"))
@@ -114,8 +98,8 @@ def register(bot):
 
     @bot.callback_query_handler(func=lambda call: call.data.startswith("product_"))
     def show_product_details(call):
-        product_id = call.data.split("_", 1)[1]
-        category_key, product = find_product(product_id)
+        product_slug = call.data.split("_", 1)[1]
+        product = menu_service.get_product(product_slug)
 
         if not product:
             bot.answer_callback_query(call.id, "Товар не найден")
@@ -124,21 +108,25 @@ def register(bot):
         markup = types.InlineKeyboardMarkup(row_width=2)
         markup.add(
             types.InlineKeyboardButton(
-                "➕ Добавить в корзину", callback_data=f"add_{product_id}"
+                "➕ Добавить в корзину", callback_data=f"add_{product_slug}"
             ),
             types.InlineKeyboardButton(
-                "🔙 Назад", callback_data=f"category_{category_key}"
+                "🔙 Назад",
+                callback_data=f"category_{product['category_slug']}",
             ),
         )
 
-        caption = (
-            f"{product['emoji']} *{product['name']}*\n\n"
-            f"💰 Цена: {product['price']}₸\n"
-            f"📝 {product['description']}"
-        )
-        image_path = config.BASE_DIR / product["image"]
+        caption_lines = [
+            f"{product['emoji']} *{product['name']}*",
+            "",
+            f"💰 Цена: {product['price']}₸",
+        ]
+        if product["description"]:
+            caption_lines.append(f"📝 {product['description']}")
+        caption = "\n".join(caption_lines)
 
-        if image_path.exists():
+        image_path = config.BASE_DIR / product["image"] if product["image"] else None
+        if image_path and image_path.exists():
             with open(image_path, "rb") as photo:
                 bot.send_photo(
                     call.message.chat.id,
@@ -158,8 +146,8 @@ def register(bot):
 
     @bot.callback_query_handler(func=lambda call: call.data.startswith("add_"))
     def add_to_cart(call):
-        product_id = call.data.split("_", 1)[1]
-        _, product = find_product(product_id)
+        product_slug = call.data.split("_", 1)[1]
+        product = menu_service.get_product(product_slug)
 
         if not product:
             bot.answer_callback_query(call.id, "Товар не найден")

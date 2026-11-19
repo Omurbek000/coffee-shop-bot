@@ -1,5 +1,6 @@
 .env
 cart_data.json
+*.db
 __pycache__/
 *.py[cod]
 .venv/

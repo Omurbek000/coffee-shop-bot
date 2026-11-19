@@ -1,33 +1,75 @@
 {
-  "drinks": {
-    "title": "Напитки",
+  "coffee": {
+    "title": "Кофе",
     "emoji": "☕",
     "items": [
-      {"id": "latte", "name": "Латте", "price": 350, "description": "Классический латте с нежной пенкой", "emoji": "☕", "image": "content/latte.jpg"},
-      {"id": "cappuccino", "name": "Капучино", "price": 320, "description": "Итальянский капучино", "emoji": "☕", "image": "content/cappuccino.jpg"},
-      {"id": "americano", "name": "Американо", "price": 250, "description": "Крепкий черный кофе", "emoji": "☕", "image": "content/americano.jpg"},
-      {"id": "espresso", "name": "Эспрессо", "price": 200, "description": "Классический эспрессо", "emoji": "☕", "image": "content/espresso.jpg"},
-      {"id": "mocha", "name": "Мокко", "price": 380, "description": "Кофе с шоколадом", "emoji": "☕", "image": "content/mocha.jpg"}
+      {"id": "doppio", "name": "Доппио 60 мл", "price": 660, "description": "Двойной эспрессо", "emoji": "☕"},
+      {"id": "americano_200", "name": "Американо 200 мл", "price": 700, "description": "Классический черный кофе", "emoji": "☕"},
+      {"id": "americano_400", "name": "Американо 400 мл", "price": 900, "description": "Классический черный кофе", "emoji": "☕"},
+      {"id": "cappuccino_200", "name": "Капучино 200 мл", "price": 850, "description": "Итальянский капучино", "emoji": "☕"},
+      {"id": "cappuccino_400", "name": "Капучино 400 мл", "price": 1100, "description": "Итальянский капучино", "emoji": "☕"},
+      {"id": "latte", "name": "Латте 400 мл", "price": 1100, "description": "Классический латте с нежной пенкой", "emoji": "☕"},
+      {"id": "flat_white", "name": "Флэт Уайт 200 мл", "price": 950, "description": "Двойной ристретто с молоком", "emoji": "☕"},
+      {"id": "batch_brew", "name": "Батч-брю", "price": 900, "description": "Кофе, сваренный большой партией", "emoji": "☕"}
     ]
   },
-  "breakfast": {
-    "title": "Завтраки",
+  "drinks": {
+    "title": "Кофейные напитки",
+    "emoji": "🥤",
+    "items": [
+      {"id": "raf_vanilla", "name": "Раф Ваниль 380 мл", "price": 1500, "description": "Раф с ванилью", "emoji": "🥤"},
+      {"id": "raf_citrus", "name": "Раф Цитрус 380 мл", "price": 1500, "description": "Раф с цитрусом", "emoji": "🥤"},
+      {"id": "raf_apple", "name": "Раф Яблоко 380 мл", "price": 1500, "description": "Раф с яблоком, новинка", "emoji": "🥤"},
+      {"id": "ice_americano", "name": "Айс Американо 380 мл", "price": 1000, "description": "Холодный американо", "emoji": "🧊"},
+      {"id": "ice_cappuccino", "name": "Айс Капучино 380 мл", "price": 1150, "description": "Холодный капучино", "emoji": "🧊"},
+      {"id": "ice_latte", "name": "Айс Латте 380 мл", "price": 1150, "description": "Холодный латте", "emoji": "🧊"},
+      {"id": "cocoa_250", "name": "Какао 250 мл", "price": 900, "description": "Горячее какао", "emoji": "🍫"},
+      {"id": "cocoa_380", "name": "Какао 380 мл", "price": 1300, "description": "Горячее какао", "emoji": "🍫"},
+      {"id": "hot_chocolate_250", "name": "Горячий шоколад 250 мл", "price": 900, "description": "Густой горячий шоколад", "emoji": "🍫"},
+      {"id": "hot_chocolate_380", "name": "Горячий шоколад 380 мл", "price": 1300, "description": "Густой горячий шоколад", "emoji": "🍫"},
+      {"id": "marshmallow", "name": "Маршмеллоу", "price": 100, "description": "Маршмеллоу к напиткам", "emoji": "🍬"}
+    ]
+  },
+  "coffee_addons": {
+    "title": "Добавки к кофе",
+    "emoji": "🥛",
+    "items": [
+      {"id": "oat_milk", "name": "Овсяное молоко", "price": 500, "description": "Альтернативное молоко", "emoji": "🥛"},
+      {"id": "hazelnut_milk", "name": "Фундучное молоко", "price": 500, "description": "Альтернативное молоко", "emoji": "🥛"},
+      {"id": "coconut_milk", "name": "Кокосовое молоко", "price": 500, "description": "Альтернативное молоко", "emoji": "🥛"},
+      {"id": "almond_milk", "name": "Миндальное молоко", "price": 500, "description": "Альтернативное молоко", "emoji": "🥛"},
+      {"id": "decaf", "name": "Decaf", "price": 300, "description": "Кофе без кофеина", "emoji": "☕"},
+      {"id": "syrup", "name": "Сироп в ассортименте", "price": 200, "description": "На выбор", "emoji": "🍯"}
+    ]
+  },
+  "hearty_breakfast": {
+    "title": "Сытные завтраки",
     "emoji": "🍳",
     "items": [
-      {"id": "omlet", "name": "Омлет", "price": 450, "description": "Сытный омлет с овощами", "emoji": "🍳", "image": "content/omlet.jpg"},
-      {"id": "pancakes", "name": "Блинчики", "price": 400, "description": "Домашние блинчики", "emoji": "🥞", "image": "content/pancakes.jpg"},
-      {"id": "sandwich", "name": "Сэндвич", "price": 380, "description": "Сэндвич с курицей", "emoji": "🥪", "image": "content/sandwich.jpg"},
-      {"id": "croissant", "name": "Круассан", "price": 320, "description": "Свежий круассан", "emoji": "🥐", "image": "content/croissant.jpg"}
+      {"id": "eastern_breakfast", "name": "Восточный завтрак", "price": 3200, "description": "Хумус, микс салата, скрэмбл, сыр фета", "emoji": "🍳"},
+      {"id": "broccoli_omelet", "name": "Омлет с брокколи", "price": 2500, "description": "Омлет, брокколи, цветная капуста, сыр фета", "emoji": "🍳"},
+      {"id": "mushroom_pancakes", "name": "Блинчики с грибами", "price": 1500, "description": "Блинчики с грибами со сметаной", "emoji": "🥞"},
+      {"id": "tomato_shakshuka", "name": "Шакшука томатная", "price": 2800, "description": "Томатный соус, запеченный перец, пряные специи с добавлением яиц пашот", "emoji": "🍳"},
+      {"id": "cheese_shakshuka", "name": "Шакшука сырная", "price": 3200, "description": "Сливочный трюфельный соус, пашот, моцарелла, шпинат", "emoji": "🍳"},
+      {"id": "three_eggs_breakfast", "name": "Завтрак из 3х яиц", "price": 3200, "description": "Лосось, шпинат, микс салат, крем чиз", "emoji": "🍳"},
+      {"id": "bacon_pancakes", "name": "Панкейки с беконом", "price": 3000, "description": "Бекон, яйцо, кленовый сироп, панкейки", "emoji": "🥓"},
+      {"id": "american_breakfast_bacon", "name": "Американский завтрак с беконом", "price": 3200, "description": "Жареный бекон, глазунья из 3х яиц, картофель, черри, микс салата, шампиньоны, фасоль в томате", "emoji": "🥓"},
+      {"id": "american_breakfast_sausage", "name": "Американский завтрак с сосисками", "price": 3300, "description": "Сосиски, глазунья из 3х яиц, картофель, черри, микс салата, шампиньоны, фасоль в томате", "emoji": "🥓"},
+      {"id": "hearty_breakfast", "name": "Сытный завтрак", "price": 3000, "description": "Сосиски в томатном соусе, скрэмбл, пиккули, пита, микс салата", "emoji": "🍳"}
     ]
   },
-  "desserts": {
-    "title": "Десерты",
-    "emoji": "🍰",
+  "sweet_breakfast": {
+    "title": "Сладкие завтраки",
+    "emoji": "🥞",
     "items": [
-      {"id": "cheesecake", "name": "Чизкейк", "price": 450, "description": "Нью-йорк чизкейк", "emoji": "🍰", "image": "content/cheesecake.jpg"},
-      {"id": "tiramisu", "name": "Тирамису", "price": 420, "description": "Классический тирамису", "emoji": "🍰", "image": "content/tiramisu.jpg"},
-      {"id": "brownie", "name": "Брауни", "price": 350, "description": "Шоколадный брауни", "emoji": "🍫", "image": "content/brownie.jpg"},
-      {"id": "ice_cream", "name": "Мороженое", "price": 300, "description": "Домашнее мороженое", "emoji": "🍦", "image": "content/ice_cream.jpg"}
+      {"id": "oatmeal", "name": "Каша овсяная", "price": 1400, "description": "С сезонными ягодами и карамелизированным миндалем", "emoji": "🥣"},
+      {"id": "rice_porridge", "name": "Каша рисовая", "price": 2200, "description": "Рисовая каша, сгущенка, пломбир, манго, фисташки", "emoji": "🥣"},
+      {"id": "yogurt", "name": "Йогурт классический", "price": 1800, "description": "С домашней гранолой, сезонными ягодами/фруктами и бананом", "emoji": "🍧"},
+      {"id": "syrniki", "name": "Сырники", "price": 2000, "description": "Со сметаной и сезонными ягодами/фруктами", "emoji": "🥞"},
+      {"id": "home_pancakes", "name": "Домашние блинчики", "price": 1500, "description": "С малиновым вареньем и сметаной", "emoji": "🥞"},
+      {"id": "cottage_mango_pancakes", "name": "Блинчики с творогом и манго", "price": 1500, "description": "Со сметаной", "emoji": "🥞"},
+      {"id": "cottage_bake", "name": "Творожная запеканка", "price": 2100, "description": "С муссом из вареной сгущенки", "emoji": "🍰"},
+      {"id": "condensed_pancakes", "name": "Панкейки с муссом из вареной сгущенки", "price": 2800, "description": "Панкейки, мусс из вареной сгущенки, сезонные ягоды/фрукты", "emoji": "🥞"}
     ]
   }
 }

@@ -2,8 +2,10 @@ import logging
 
 from telebot import TeleBot
 
+import db
 from config import BOT_TOKEN, LOG_LEVEL
 from handlers import register_handlers
+from services import menu_service
 
 
 def main():
@@ -15,6 +17,9 @@ def main():
 
     if not BOT_TOKEN:
         raise SystemExit("BOT_TOKEN не задан. Скопируйте .env.example в .env и заполните BOT_TOKEN.")
+
+    db.init_db()
+    menu_service.ensure_seeded()
 
     bot = TeleBot(BOT_TOKEN)
     register_handlers(bot)
