@@ -15,4 +15,3 @@ LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 
 MENU_FILE = BASE_DIR / "data" / "menu.json"
 DB_FILE = BASE_DIR / "data" / "coffee_shop.db"
-CART_FILE = BASE_DIR / "cart_data.json"

@@ -153,7 +153,14 @@ def register(bot):
             bot.answer_callback_query(call.id, "Товар не найден")
             return
 
-        cart_service.add_item(call.from_user.id, product)
+        user = call.from_user
+        added = cart_service.add_item(
+            user.id, user.username, user.first_name, user.last_name, product_slug
+        )
+        if not added:
+            bot.answer_callback_query(call.id, "❌ Товар недоступен")
+            return
+
         bot.answer_callback_query(
             call.id, f"✅ {product['name']} добавлен в корзину"
         )

@@ -20,7 +20,11 @@ def register(bot):
 
         text = "🛒 *Ваша корзина:*\n\n"
         for index, item in enumerate(items, 1):
-            text += f"{index}. {item['emoji']} {item['name']} - {item['price']}₸\n"
+            line_total = item["price"] * item["quantity"]
+            text += (
+                f"{index}. {item['emoji']} {item['name']}"
+                f" x{item['quantity']} — {line_total}₸\n"
+            )
         text += f"\n💰 *Итого: {cart_service.total(user_id)}₸*"
 
         markup = types.InlineKeyboardMarkup(row_width=2)
@@ -48,23 +52,30 @@ def register(bot):
 
     @bot.callback_query_handler(func=lambda call: call.data == "checkout")
     def checkout(call):
-        user_id = call.from_user.id
-        items = cart_service.get_items(user_id)
+        user = call.from_user
+        order = cart_service.checkout(
+            user.id, user.username, user.first_name, user.last_name
+        )
 
-        if not items:
+        if not order:
             bot.answer_callback_query(call.id, "Корзина пуста")
             return
 
-        total = cart_service.total(user_id)
-        if call.from_user.username:
-            customer = f"@{call.from_user.username}"
+        if user.username:
+            customer = f"@{user.username}"
         else:
-            customer = call.from_user.full_name
+            customer = f"{user.first_name} (ID: {user.id})"
 
-        order_lines = [f"🆕 Новый заказ от {customer} (ID: {user_id})", ""]
-        for item in items:
-            order_lines.append(f"{item['emoji']} {item['name']} - {item['price']}₸")
-        order_lines += ["", f"💰 Итого: {total}₸"]
+        order_lines = [
+            f"🆕 Новый заказ №{order['order_id']} от {customer}",
+            "",
+        ]
+        for item in order["items"]:
+            order_lines.append(
+                f"{item['emoji']} {item['name']} x{item['quantity']}"
+                f" - {item['price'] * item['quantity']}₸"
+            )
+        order_lines += ["", f"💰 Итого: {order['total']}₸"]
         order_text = "\n".join(order_lines)
 
         if config.ADMIN_CHAT_ID:
@@ -73,9 +84,9 @@ def register(bot):
             except Exception:
                 logger.exception("Не удалось отправить заказ админу")
         else:
-            logger.warning("ADMIN_CHAT_ID не задан: заказ от %s не отправлен", user_id)
-
-        cart_service.clear(user_id)
+            logger.warning(
+                "ADMIN_CHAT_ID не задан: заказ №%s не отправлен", order["order_id"]
+            )
 
         markup = types.InlineKeyboardMarkup(row_width=1)
         markup.add(
@@ -86,8 +97,8 @@ def register(bot):
         )
         bot.send_message(
             call.message.chat.id,
-            "✅ *Заказ принят!*\n\n"
-            f"Сумма заказа: {total}₸\n\n"
+            f"✅ *Заказ №{order['order_id']} принят!*\n\n"
+            f"Сумма заказа: {order['total']}₸\n\n"
             "Наш менеджер свяжется с вами для подтверждения.",
             parse_mode="Markdown",
             reply_markup=markup,
