@@ -1,11 +1,6 @@
-import logging
-
 from telebot import types
 
-import config
 from services import cart_service
-
-logger = logging.getLogger(__name__)
 
 
 def register(bot):
@@ -49,58 +44,3 @@ def register(bot):
         cart_service.clear(call.from_user.id)
         bot.answer_callback_query(call.id, "Корзина очищена")
         bot.send_message(call.message.chat.id, "🛒 Корзина очищена")
-
-    @bot.callback_query_handler(func=lambda call: call.data == "checkout")
-    def checkout(call):
-        user = call.from_user
-        order = cart_service.checkout(
-            user.id, user.username, user.first_name, user.last_name
-        )
-
-        if not order:
-            bot.answer_callback_query(call.id, "Корзина пуста")
-            return
-
-        if user.username:
-            customer = f"@{user.username}"
-        else:
-            customer = f"{user.first_name} (ID: {user.id})"
-
-        order_lines = [
-            f"🆕 Новый заказ №{order['order_id']} от {customer}",
-            "",
-        ]
-        for item in order["items"]:
-            order_lines.append(
-                f"{item['emoji']} {item['name']} x{item['quantity']}"
-                f" - {item['price'] * item['quantity']}₸"
-            )
-        order_lines += ["", f"💰 Итого: {order['total']}₸"]
-        order_text = "\n".join(order_lines)
-
-        if config.ADMIN_CHAT_ID:
-            try:
-                bot.send_message(config.ADMIN_CHAT_ID, order_text)
-            except Exception:
-                logger.exception("Не удалось отправить заказ админу")
-        else:
-            logger.warning(
-                "ADMIN_CHAT_ID не задан: заказ №%s не отправлен", order["order_id"]
-            )
-
-        markup = types.InlineKeyboardMarkup(row_width=1)
-        markup.add(
-            types.InlineKeyboardButton(
-                "📞 Связаться с нами", url="https://wa.me/77002478746"
-            ),
-            types.InlineKeyboardButton("🔙 В меню", callback_data="menu"),
-        )
-        bot.send_message(
-            call.message.chat.id,
-            f"✅ *Заказ №{order['order_id']} принят!*\n\n"
-            f"Сумма заказа: {order['total']}₸\n\n"
-            "Наш менеджер свяжется с вами для подтверждения.",
-            parse_mode="Markdown",
-            reply_markup=markup,
-        )
-        bot.answer_callback_query(call.id)

@@ -48,6 +48,10 @@ CREATE TABLE IF NOT EXISTS orders (
     user_id INTEGER NOT NULL,
     total INTEGER NOT NULL CHECK (total >= 0),
     status TEXT NOT NULL DEFAULT 'new',
+    phone TEXT,
+    delivery_method TEXT NOT NULL DEFAULT 'pickup',
+    address TEXT,
+    comment TEXT,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
@@ -65,6 +69,13 @@ CREATE INDEX IF NOT EXISTS idx_orders_user ON orders(user_id);
 CREATE INDEX IF NOT EXISTS idx_order_items_order ON order_items(order_id);
 """
 
+MIGRATIONS = (
+    ("orders", "phone", "TEXT"),
+    ("orders", "delivery_method", "TEXT NOT NULL DEFAULT 'pickup'"),
+    ("orders", "address", "TEXT"),
+    ("orders", "comment", "TEXT"),
+)
+
 
 def connect():
     config.DB_FILE.parent.mkdir(parents=True, exist_ok=True)
@@ -74,10 +85,18 @@ def connect():
     return conn
 
 
+def _apply_migrations(conn):
+    for table, column, definition in MIGRATIONS:
+        columns = {row["name"] for row in conn.execute(f"PRAGMA table_info({table})")}
+        if column not in columns:
+            conn.execute(f"ALTER TABLE {table} ADD COLUMN {column} {definition}")
+
+
 def init_db():
     conn = connect()
     try:
         conn.executescript(SCHEMA)
+        _apply_migrations(conn)
         conn.commit()
     finally:
         conn.close()

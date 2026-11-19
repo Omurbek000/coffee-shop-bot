@@ -80,7 +80,16 @@ def clear(user_id):
             conn.execute("DELETE FROM cart_items WHERE user_id = ?", (user_id,))
 
 
-def checkout(user_id, username, first_name, last_name):
+def checkout(
+    user_id,
+    username,
+    first_name,
+    last_name,
+    phone,
+    delivery_method,
+    address=None,
+    comment=None,
+):
     with closing(connect()) as conn:
         with conn:
             _upsert_user(conn, user_id, username, first_name, last_name)
@@ -90,8 +99,19 @@ def checkout(user_id, username, first_name, last_name):
 
             total_sum = sum(row["price"] * row["quantity"] for row in rows)
             cursor = conn.execute(
-                "INSERT INTO orders (user_id, total) VALUES (?, ?)",
-                (user_id, total_sum),
+                """
+                INSERT INTO orders
+                    (user_id, total, phone, delivery_method, address, comment)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    user_id,
+                    total_sum,
+                    phone,
+                    delivery_method,
+                    address,
+                    comment,
+                ),
             )
             order_id = cursor.lastrowid
 

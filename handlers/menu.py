@@ -38,6 +38,10 @@ def register(bot):
             types.InlineKeyboardButton("ℹ️ О нас", callback_data="about"),
             types.InlineKeyboardButton("📍 Контакты", callback_data="contacts"),
         )
+        markup.add(
+            types.InlineKeyboardButton("📶 Wi-Fi", callback_data="wifi"),
+            types.InlineKeyboardButton("✍️ Отзыв", callback_data="feedback"),
+        )
         bot.send_message(
             message.chat.id,
             "☕ *Добро пожаловать в Coffee Shop Bot!*\n\n"
