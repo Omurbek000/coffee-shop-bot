@@ -1,0 +1,33 @@
+{
+  "drinks": {
+    "title": "Напитки",
+    "emoji": "☕",
+    "items": [
+      {"id": "latte", "name": "Латте", "price": 350, "description": "Классический латте с нежной пенкой", "emoji": "☕", "image": "content/latte.jpg"},
+      {"id": "cappuccino", "name": "Капучино", "price": 320, "description": "Итальянский капучино", "emoji": "☕", "image": "content/cappuccino.jpg"},
+      {"id": "americano", "name": "Американо", "price": 250, "description": "Крепкий черный кофе", "emoji": "☕", "image": "content/americano.jpg"},
+      {"id": "espresso", "name": "Эспрессо", "price": 200, "description": "Классический эспрессо", "emoji": "☕", "image": "content/espresso.jpg"},
+      {"id": "mocha", "name": "Мокко", "price": 380, "description": "Кофе с шоколадом", "emoji": "☕", "image": "content/mocha.jpg"}
+    ]
+  },
+  "breakfast": {
+    "title": "Завтраки",
+    "emoji": "🍳",
+    "items": [
+      {"id": "omlet", "name": "Омлет", "price": 450, "description": "Сытный омлет с овощами", "emoji": "🍳", "image": "content/omlet.jpg"},
+      {"id": "pancakes", "name": "Блинчики", "price": 400, "description": "Домашние блинчики", "emoji": "🥞", "image": "content/pancakes.jpg"},
+      {"id": "sandwich", "name": "Сэндвич", "price": 380, "description": "Сэндвич с курицей", "emoji": "🥪", "image": "content/sandwich.jpg"},
+      {"id": "croissant", "name": "Круассан", "price": 320, "description": "Свежий круассан", "emoji": "🥐", "image": "content/croissant.jpg"}
+    ]
+  },
+  "desserts": {
+    "title": "Десерты",
+    "emoji": "🍰",
+    "items": [
+      {"id": "cheesecake", "name": "Чизкейк", "price": 450, "description": "Нью-йорк чизкейк", "emoji": "🍰", "image": "content/cheesecake.jpg"},
+      {"id": "tiramisu", "name": "Тирамису", "price": 420, "description": "Классический тирамису", "emoji": "🍰", "image": "content/tiramisu.jpg"},
+      {"id": "brownie", "name": "Брауни", "price": 350, "description": "Шоколадный брауни", "emoji": "🍫", "image": "content/brownie.jpg"},
+      {"id": "ice_cream", "name": "Мороженое", "price": 300, "description": "Домашнее мороженое", "emoji": "🍦", "image": "content/ice_cream.jpg"}
+    ]
+  }
+}
